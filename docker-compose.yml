@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  proxy:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: proxy_admin
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    networks:
+      - docker_net
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+      - 9000:9000
+      - 9443:9443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - docker_data:/data
+    networks:
+      - docker_net
+
+networks:
+  docker_net:
+    name: docker_net
+
+volumes:
+  docker_data:
+    name: docker_data
