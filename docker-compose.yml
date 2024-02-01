@@ -32,8 +32,6 @@ services:
 
 networks:
   docker_net:
-    name: docker_net
 
 volumes:
   docker_data:
-    name: docker_data
